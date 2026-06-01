@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Meta tags for proper rendering and responsiveness -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Todo Journal</title>
+
+  <!-- Google Fonts: Playfair Display for headings, Lato for body text -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <!-- Link to our external CSS file -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ===== MAIN WRAPPER =====
+       Centers everything on the page using flexbox (see CSS) -->
+  <div class="page-wrapper">
+
+    <!-- ===== MAIN CARD =====
+         The central container that holds the whole app -->
+    <div class="main-card">
+
+      <!-- ===== HEADER SECTION ===== -->
+      <header class="app-header">
+        <!-- Decorative leaf icon above the title -->
+        <span class="header-icon">✦</span>
+        <h1 class="app-title">My Todo Journal</h1>
+        <p class="app-subtitle">Organize your day beautifully</p>
+        <!-- Decorative divider line -->
+        <div class="header-divider"></div>
+      </header>
+
+      <!-- ===== FORM SECTION =====
+           Users type their task here and click Add Task -->
+      <section class="form-section">
+        <h2 class="section-label">New Entry</h2>
+
+        <!-- Task Title Input -->
+        <div class="input-group">
+          <label for="taskTitle" class="input-label">Task Title</label>
+          <input
+            type="text"
+            id="taskTitle"
+            class="input-field"
+            placeholder="What needs to be done?"
+            autocomplete="off"
+          />
+        </div>
+
+        <!-- Task Description Textarea -->
+        <div class="input-group">
+          <label for="taskDescription" class="input-label">Description <span class="optional-tag">(optional)</span></label>
+          <textarea
+            id="taskDescription"
+            class="input-field textarea-field"
+            placeholder="Add a little note about this task..."
+            rows="3"
+          ></textarea>
+        </div>
+
+        <!-- Submit Button — text changes between "Add Task" and "Update Task" -->
+        <button id="submitBtn" class="btn btn-primary" onclick="handleSubmit()">
+          Add Task
+        </button>
+
+        <!-- Cancel Edit Button — hidden by default, shown when editing -->
+        <button id="cancelBtn" class="btn btn-cancel" onclick="cancelEdit()" style="display: none;">
+          Cancel
+        </button>
+      </section>
+
+      <!-- ===== DIVIDER ===== -->
+      <div class="section-divider"></div>
+
+      <!-- ===== TODO LIST SECTION ===== -->
+      <section class="list-section">
+
+        <!-- Header row with label + task counter -->
+        <div class="list-header">
+          <h2 class="section-label">Your Tasks</h2>
+          <!-- Task count badge — updated by JavaScript -->
+          <span id="taskCount" class="task-count-badge">0 tasks</span>
+        </div>
+
+        <!-- ===== EMPTY STATE MESSAGE =====
+             Shown when there are no tasks. Hidden by JavaScript when tasks exist. -->
+        <div id="emptyMessage" class="empty-message">
+          <span class="empty-icon">☕</span>
+          <p>Your journal is empty.</p>
+          <p class="empty-sub">Add your first task above to get started.</p>
+        </div>
+
+        <!-- ===== TODO LIST =====
+             JavaScript dynamically adds task cards inside this container -->
+        <ul id="todoList" class="todo-list"></ul>
+
+      </section>
+
+    </div><!-- end .main-card -->
+
+    <!-- Footer credit -->
+    <p class="page-footer">crafted with care &nbsp;✦</p>
+
+  </div><!-- end .page-wrapper -->
+
+  <!-- Link to our external JavaScript file -->
+  <!-- Placed at the bottom so the HTML loads before the script runs -->
+  <script src="script.js"></script>
+
+</body>
+</html>

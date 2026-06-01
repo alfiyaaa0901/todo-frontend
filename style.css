@@ -1,0 +1,565 @@
+/* ============================================================
+   STYLE.CSS — My Todo Journal
+   A warm, cozy, luxury planner aesthetic.
+   
+   TABLE OF CONTENTS:
+   1. CSS Variables (Color Palette & Fonts)
+   2. Reset & Base Styles
+   3. Page Layout
+   4. Main Card
+   5. Header
+   6. Form Section (Inputs & Buttons)
+   7. Dividers
+   8. Todo List Section
+   9. Todo Cards
+   10. Empty State
+   11. Animations
+   12. Responsive Design (Media Queries)
+============================================================ */
+
+
+/* ============================================================
+   1. CSS VARIABLES
+   Define all colors and fonts in one place.
+   This makes it easy to change the palette globally.
+============================================================ */
+:root {
+  /* Background Colors */
+  --color-page-bg:     #F8F4EC;
+  --color-card-bg:     #F6F1E7;
+  --color-input-bg:    #EDE5D8;
+  --color-todo-card:   #E8DCCB;
+  --color-sand:        #DCC9B6;
+
+  /* Accent Colors */
+  --color-brown:       #6F4E37;
+  --color-espresso:    #4A3428;
+  --color-gold:        #C7A46A;
+  --color-gold-dark:   #A8854E;
+
+  /* Text Colors */
+  --color-text-dark:   #2E221B;
+  --color-text-mid:    #5A3E2B;
+  --color-text-soft:   #8C6E56;
+
+  /* Delete Button */
+  --color-delete:      #9B5E4A;
+  --color-delete-hover:#7A3D2B;
+
+  /* Shadows */
+  --shadow-card:       0 4px 24px rgba(111, 78, 55, 0.10);
+  --shadow-hover:      0 8px 32px rgba(111, 78, 55, 0.18);
+  --shadow-btn:        0 4px 14px rgba(111, 78, 55, 0.25);
+
+  /* Fonts */
+  --font-heading:      'Playfair Display', Georgia, serif;
+  --font-body:         'Lato', 'Helvetica Neue', sans-serif;
+
+  /* Border Radius */
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   22px;
+  --radius-full: 999px;
+}
+
+
+/* ============================================================
+   2. RESET & BASE STYLES
+   Remove browser default styles for consistency.
+============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box; /* Padding is included in element width */
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-page-bg);
+  color: var(--color-text-dark);
+  min-height: 100vh;
+  line-height: 1.6;
+
+  /* Subtle warm paper texture using a CSS gradient pattern */
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(199, 164, 106, 0.07) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(111, 78, 55, 0.05) 0%, transparent 50%);
+}
+
+/* Remove default list bullet points */
+ul {
+  list-style: none;
+}
+
+
+/* ============================================================
+   3. PAGE LAYOUT
+   Centers the main card vertically and horizontally.
+============================================================ */
+.page-wrapper {
+  display: flex;            /* Enable flexbox */
+  flex-direction: column;   /* Stack children vertically */
+  align-items: center;      /* Center horizontally */
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 40px 16px 60px;  /* Top and bottom breathing room */
+}
+
+
+/* ============================================================
+   4. MAIN CARD
+   The central white "notebook" that holds everything.
+============================================================ */
+.main-card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  width: 100%;
+  max-width: 620px;         /* Never gets too wide on big screens */
+  padding: 48px 40px 52px;
+
+  /* Subtle left border like a journal spine */
+  border-left: 4px solid var(--color-gold);
+
+  /* Smooth shadow transition on hover */
+  transition: box-shadow 0.3s ease;
+}
+
+.main-card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+
+/* ============================================================
+   5. HEADER
+   App title, subtitle, and decorative icon.
+============================================================ */
+.app-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.header-icon {
+  display: block;
+  font-size: 1.4rem;
+  color: var(--color-gold);
+  margin-bottom: 10px;
+  letter-spacing: 4px;
+}
+
+.app-title {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--color-espresso);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.app-subtitle {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--color-text-soft);
+  margin-top: 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Thin decorative line below the header */
+.header-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--color-gold), transparent);
+  margin: 20px auto 0;
+  border-radius: var(--radius-full);
+}
+
+
+/* ============================================================
+   6. FORM SECTION
+   Inputs, labels, and buttons.
+============================================================ */
+.form-section {
+  margin-bottom: 10px;
+}
+
+/* Small label above each input */
+.section-label {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--color-brown);
+  margin-bottom: 18px;
+}
+
+/* Wrapper for each label + input pair */
+.input-group {
+  margin-bottom: 16px;
+}
+
+.input-label {
+  display: block;             /* Makes label sit above the input */
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+  margin-bottom: 7px;
+}
+
+/* "(optional)" text in the label */
+.optional-tag {
+  font-weight: 300;
+  text-transform: none;
+  letter-spacing: 0;
+  font-style: italic;
+}
+
+/* Shared styles for both <input> and <textarea> */
+.input-field {
+  width: 100%;
+  padding: 13px 16px;
+  background-color: var(--color-input-bg);
+  border: 1.5px solid var(--color-sand);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.97rem;
+  color: var(--color-text-dark);
+  outline: none;              /* Remove default blue ring */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Placeholder text style */
+.input-field::placeholder {
+  color: var(--color-text-soft);
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* Focus state — glowing warm border */
+.input-field:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(199, 164, 106, 0.18);
+}
+
+/* Textarea specific: prevent horizontal resize */
+.textarea-field {
+  resize: vertical;           /* Allow only vertical resize */
+  min-height: 80px;
+}
+
+/* ---- BUTTONS ---- */
+
+/* Shared styles between all buttons */
+.btn {
+  display: inline-block;
+  padding: 13px 28px;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;            /* Show hand cursor on hover */
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  margin-top: 8px;
+  margin-right: 10px;
+}
+
+/* Primary "Add Task" / "Update Task" button */
+.btn-primary {
+  background-color: var(--color-brown);
+  color: var(--color-page-bg);
+  box-shadow: var(--shadow-btn);
+}
+
+/* Hover: lifts up slightly */
+.btn-primary:hover {
+  background-color: var(--color-espresso);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(111, 78, 55, 0.35);
+}
+
+/* Active (click): pushes down */
+.btn-primary:active {
+  transform: translateY(0px);
+}
+
+/* Cancel button — subtle, outlined style */
+.btn-cancel {
+  background-color: transparent;
+  color: var(--color-text-soft);
+  border: 1.5px solid var(--color-sand);
+}
+
+.btn-cancel:hover {
+  background-color: var(--color-sand);
+  color: var(--color-text-dark);
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   7. DIVIDERS
+   Visual separators between sections.
+============================================================ */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-sand), transparent);
+  margin: 32px 0;
+}
+
+
+/* ============================================================
+   8. TODO LIST SECTION
+   The area below the divider that shows all tasks.
+============================================================ */
+.list-section {
+  /* No extra styles needed; inherits from main-card */
+}
+
+/* Row with "Your Tasks" label and task counter badge */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Small pill badge showing the count */
+.task-count-badge {
+  background-color: var(--color-input-bg);
+  color: var(--color-text-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-sand);
+}
+
+/* The <ul> that holds all todo cards */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;                  /* Space between cards */
+}
+
+
+/* ============================================================
+   9. TODO CARDS
+   Each task is a styled list item (<li>).
+============================================================ */
+.todo-card {
+  background-color: var(--color-todo-card);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+
+  /* Soft left border accent */
+  border-left: 3px solid var(--color-gold);
+
+  /* Shadow and transition */
+  box-shadow: 0 2px 10px rgba(111, 78, 55, 0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  /* Slide-in animation when a card appears */
+  animation: slideIn 0.3s ease;
+}
+
+/* Card hover: elevates slightly */
+.todo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(111, 78, 55, 0.14);
+}
+
+/* Left side of the card: holds title and description */
+.card-content {
+  flex: 1;                    /* Takes up remaining space */
+  min-width: 0;               /* Prevents text overflow issues */
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-espresso);
+  margin-bottom: 4px;
+
+  /* Prevent very long words from overflowing */
+  word-break: break-word;
+}
+
+.card-description {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--color-text-soft);
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+/* Right side of the card: Edit and Delete buttons */
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex-shrink: 0;             /* Don't shrink the buttons area */
+}
+
+/* Shared small button styles */
+.btn-edit,
+.btn-delete {
+  padding: 6px 14px;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+/* Edit button — muted gold */
+.btn-edit {
+  background-color: var(--color-gold);
+  color: var(--color-espresso);
+}
+
+.btn-edit:hover {
+  background-color: var(--color-gold-dark);
+  transform: translateY(-1px);
+}
+
+/* Delete button — soft brown-red */
+.btn-delete {
+  background-color: var(--color-delete);
+  color: var(--color-page-bg);
+}
+
+.btn-delete:hover {
+  background-color: var(--color-delete-hover);
+  transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   10. EMPTY STATE
+   Shown when there are no tasks.
+============================================================ */
+.empty-message {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-text-soft);
+}
+
+.empty-icon {
+  display: block;
+  font-size: 2.4rem;
+  margin-bottom: 14px;
+  opacity: 0.7;
+}
+
+.empty-message p {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--color-text-mid);
+}
+
+.empty-sub {
+  font-family: var(--font-body) !important;
+  font-style: normal !important;
+  font-size: 0.84rem !important;
+  color: var(--color-text-soft) !important;
+  font-weight: 300;
+  margin-top: 6px;
+}
+
+/* Page footer */
+.page-footer {
+  margin-top: 28px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+  opacity: 0.6;
+}
+
+
+/* ============================================================
+   11. ANIMATIONS
+============================================================ */
+
+/* Cards slide in from below when added */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ============================================================
+   12. RESPONSIVE DESIGN
+   Adjusts layout for smaller screens.
+============================================================ */
+
+/* ---- TABLET (max 640px) ---- */
+@media (max-width: 640px) {
+  .main-card {
+    padding: 36px 24px 40px;
+    border-radius: var(--radius-md);
+  }
+
+  .app-title {
+    font-size: 1.8rem;
+  }
+}
+
+/* ---- MOBILE (max 420px) ---- */
+@media (max-width: 420px) {
+  .main-card {
+    padding: 28px 18px 32px;
+  }
+
+  .app-title {
+    font-size: 1.55rem;
+  }
+
+  /* Stack Edit and Delete side-by-side on small screens */
+  .card-actions {
+    flex-direction: row;
+  }
+
+  /* Ensure buttons don't overflow */
+  .btn-edit,
+  .btn-delete {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+  }
+
+  /* Full-width submit button on mobile */
+  .btn-primary {
+    width: 100%;
+    text-align: center;
+    margin-right: 0;
+  }
+
+  .btn-cancel {
+    width: 100%;
+    text-align: center;
+    margin-right: 0;
+  }
+}
